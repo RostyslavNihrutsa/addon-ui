@@ -90,7 +90,10 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
             observer.observe(el);
         }
 
+        window.addEventListener("resize", measureAndTrim);
+
         return () => {
+            window.removeEventListener("resize", measureAndTrim);
             observer?.disconnect();
             cancelAnimationFrame(animationFrameId);
         };
