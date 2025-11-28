@@ -1,5 +1,28 @@
 # Changelog
 
+## 🚀 Release `addon-ui` v0.6.1 (2025-11-28)
+
+
+### 🧹 Chores
+
+* **ci:** improve readability of `release-it` configuration ([4fb1117](https://github.com/addon-stack/addon-ui/commit/4fb1117c520fbbe1a2fcc89243b490c3967d62b4))
+
+
+
+
+### 🛠️ Refactoring
+
+* add RTL support for TextField and optimize resize handling in Truncate component ([4d24c19](https://github.com/addon-stack/addon-ui/commit/4d24c19249a2ecfccc5d0e1a5b8b4042afb7fcd3))
+
+
+
+
+
+### 🙌 Contributors
+
+- [Addon Stack](https://github.com/addon-stack) (@addon-stack) — commits: 3
+- [Rostyslav Nihrutsa](https://github.com/RostyslavNihrutsa) (@RostyslavNihrutsa) — commits: 1
+
 ## 🚀 Release `addon-ui` v0.6.0 (2025-11-21)
 
 
