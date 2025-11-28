@@ -1,3 +1,5 @@
+@use "../../styles/mixins" as dir;
+
 $root: text-field;
 
 .#{$root} {
@@ -15,6 +17,10 @@ $root: text-field;
     border-color var(--transition-speed-sm),
     box-shadow var(--transition-speed-sm),
     background var(--transition-speed-sm);
+
+  @include dir.rtl {
+    flex-direction: row-reverse;
+  }
 
   &:has(&__input:focus) {
     border-color: var(--text-field-focus-border-color, color-mix(in srgb, white 40%, var(--primary-color)));
