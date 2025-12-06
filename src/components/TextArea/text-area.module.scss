@@ -12,9 +12,9 @@ $root: text-area;
   border-radius: var(--text-area-border-radius, 8px);
   min-width: var(--text-area-min-width, 200px);
   transition:
-    border-color var(--transition-speed-color),
-    box-shadow var(--transition-speed-color),
-    background var(--transition-speed-color);
+    border-color var(--text-area-speed-border-color, var(--speed-color)),
+    box-shadow var(--text-area-speed-box-shadow, var(--speed-color)),
+    background var(--text-area-speed-bg, var(--speed-color));
 
   &:focus {
     border-color: var(--text-area-focus-border-color, color-mix(in srgb, white 40%, var(--primary-color)));

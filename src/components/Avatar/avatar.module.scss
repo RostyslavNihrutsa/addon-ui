@@ -18,8 +18,8 @@ $root: avatar;
   font-size: var(--avatar-font-size, 18px);
   font-weight: var(--avatar-font-weight, 500);
   transition:
-    border-color var(--transition-speed-color),
-    background-color var(--transition-speed-color);
+    border-color var(--avatar-speed-border-color, var(--speed-color)),
+    background-color var(--avatar-speed-bg, var(--speed-color));
 
   &--cursor-pointer {
     cursor: pointer;
@@ -82,8 +82,8 @@ $root: avatar;
     border-color: var(--avatar-fallback-border-color, var(--avatar-border-color));
     border-style: var(--avatar-fallback-border-style, var(--avatar-border-style));
     transition:
-      color var(--transition-speed-color),
-      border-color var(--transition-speed-color),
-      background-color var(--transition-speed-color);
+      color var(--avatar-speed-color, var(--speed-color)),
+      border-color var(--avatar-speed-border-color, var(--speed-color)),
+      background-color var(--avatar-speed-bg, var(--speed-color));
   }
 }

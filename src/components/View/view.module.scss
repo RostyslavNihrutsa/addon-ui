@@ -21,7 +21,7 @@ $root: view;
         var(--view-header-separate-color, var(--separator-color));
       justify-content: space-between;
       will-change: border;
-      transition: border-bottom-color var(--transition-speed-color);
+      transition: border-bottom-color var(--view-speed-border-color, var(--speed-color));
     }
   }
 

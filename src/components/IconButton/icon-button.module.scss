@@ -8,8 +8,8 @@ $root: icon-button;
   color: var(--icon-button-color);
   background: none;
   transition:
-    color var(--transition-speed-color),
-    background var(--transition-speed-color);
+    color var(--icon-button-speed-color, var(--speed-color)),
+    background var(--icon-button-speed-bg, var(--speed-color));
 
   &:hover:not(:disabled) {
     color: var(--icon-button-color-hover);

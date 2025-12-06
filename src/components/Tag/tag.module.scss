@@ -14,8 +14,8 @@ $root: tag;
   color: var(--tag-color, var(--text-secondary-color));
   background: var(--tag-bg-color, var(--bg-secondary-color));
   transition:
-    background var(--transition-speed-color),
-    color var(--transition-speed-color);
+    background var(--tag-speed-bg, var(--speed-color)),
+    color var(--tag-speed-color, var(--speed-color));
 
   &--clickable {
     cursor: pointer;

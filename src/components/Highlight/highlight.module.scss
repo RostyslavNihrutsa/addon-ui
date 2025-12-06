@@ -11,8 +11,8 @@ $root: highlight;
   margin: 0 calc(-1 * var(--highlight-x-padding, 3px));
   border-radius: var(--highlight-border-radius, 2px);
   transition:
-    color var(--transition-speed-color),
-    background-color var(--transition-speed-color);
+    color var(--highlight-speed-color, var(--speed-color)),
+    background-color var(--highlight-speed-bg, var(--speed-color));
 
   &--primary-color {
     color: var(--highlight-primary-color, #fff);

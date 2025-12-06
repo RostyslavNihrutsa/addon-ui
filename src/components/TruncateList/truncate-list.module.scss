@@ -17,7 +17,7 @@
     color: var(--truncate-list-counter-color, var(--text-secondary-color));
     font-size: var(--truncate-list-counter-font-size, inherit);
     transition:
-      color var(--transition-speed-color),
-      background var(--transition-speed-color);
+      color var(--truncate-list-speed-color, var(--speed-color)),
+      background var(--truncate-list-speed-bg, var(--speed-color));
   }
 }

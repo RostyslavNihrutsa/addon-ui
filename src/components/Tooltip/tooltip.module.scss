@@ -17,14 +17,14 @@ $root: tooltip;
     max-width: var(--tooltip-max-width, 300px);
     word-wrap: break-word;
     user-select: none;
-    animation-duration: var(--transition-speed-md);
+    animation-duration: var(--tooltip-speed-animation, var(--speed-md));
     will-change: transform, opacity;
     box-shadow: var(--tooltip-box-shadow-offset, 0 0 5px 0) var(--tooltip-box-shadow-color, rgba(210, 208, 208, 0.47));
     transition:
-      border-color var(--transition-speed-color),
-      box-shadow var(--transition-speed-color),
-      color var(--transition-speed-color),
-      background-color var(--transition-speed-color);
+      border-color var(--tooltip-speed-border-color, var(--speed-color)),
+      box-shadow var(--tooltip-speed-box-shadow, var(--speed-color)),
+      color var(--tooltip-speed-color, var(--speed-color)),
+      background-color var(--tooltip-speed-bg, var(--speed-color));
 
     &--trigger-width {
       width: var(--radix-tooltip-trigger-width);
@@ -81,8 +81,8 @@ $root: tooltip;
     stroke-width: var(--tooltip-border-width, 1px);
     margin-top: calc(var(--tooltip-border-width, 1px) * -1);
     transition:
-      fill var(--transition-speed-color),
-      stroke var(--transition-speed-color);
+      fill var(--tooltip-speed-fill, var(--speed-color)),
+      stroke var(--tooltip-speed-stroke, var(--speed-color));
   }
 }
 

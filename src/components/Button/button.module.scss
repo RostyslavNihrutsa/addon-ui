@@ -9,6 +9,11 @@ $root: button;
   height: var(--button-height, 34px);
   border-radius: var(--button-border-radius, 10px);
   padding: var(--button-padding, 0 16px);
+  will-change: background, color, transform;
+  transition:
+    color var(--button-speed-color, var(--speed-color)),
+    background var(--button-speed-bg, var(--speed-color)),
+    transform var(--button-speed-transform, var(--speed-sm));
 
   &:active:not(:disabled) {
     transform: scale(var(--button-scale, 0.98));
@@ -164,5 +169,6 @@ $root: button;
     overflow: hidden;
     max-width: var(--button-max-width, 160px);
     line-height: initial;
+    transition: color var(--button-speed-color, var(--speed-color));
   }
 }

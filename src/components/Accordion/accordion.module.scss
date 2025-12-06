@@ -11,7 +11,7 @@ $root: accordion;
     align-items: center;
     background-color: var(--accordion-header-bg-color, var(--bg-primary-color));
     will-change: background-color;
-    transition: background-color var(--transition-speed-color);
+    transition: background-color var(--accordion-speed-bg, var(--speed-color));
 
     &:hover {
       background: var(--accordion-header-hover-bg-color);
@@ -27,14 +27,14 @@ $root: accordion;
   &-content {
     background-color: var(--accordion-content-bg-color);
     will-change: background-color;
-    transition: background-color var(--transition-speed-color);
+    transition: background-color var(--accordion-speed-bg, var(--speed-color));
 
     &[data-state="open"] {
-      animation: slideDown var(--accordion-transition-animation, var(--transition-speed-sm)) ease-in-out;
+      animation: slideDown var(--accordion-speed-animation, var(--speed-sm)) ease-in-out;
     }
 
     &[data-state="closed"] {
-      animation: slideUp var(--accordion-transition-animation, var(--transition-speed-sm)) ease-in-out;
+      animation: slideUp var(--accordion-speed-animation, var(--speed-sm)) ease-in-out;
     }
   }
 }

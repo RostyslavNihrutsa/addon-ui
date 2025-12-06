@@ -8,7 +8,7 @@ $root: header;
   gap: var(--header-gap, 10px);
   padding: var(--header-padding, var(--side-padding-sm));
   padding-bottom: 0;
-  transition: background var(--transition-speed-color);
+  transition: background var(--header-speed-bg, var(--speed-color));
 
   &__wrap {
     display: flex;
@@ -23,7 +23,7 @@ $root: header;
     margin: 0;
     overflow: hidden;
     text-overflow: ellipsis;
-    transition: color var(--transition-speed-color);
+    transition: color var(--header-speed-color, var(--speed-color));
   }
 
   &__title {

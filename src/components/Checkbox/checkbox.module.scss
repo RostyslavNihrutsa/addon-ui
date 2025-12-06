@@ -13,8 +13,8 @@ $root: checkbox;
   border: var(--checkbox-border-width, 1px) solid var(--checkbox-border-color, #999);
   will-change: background, color;
   transition:
-    background var(--transition-speed-color),
-    color var(--transition-speed-color);
+    background var(--checkbox-speed-bg, var(--speed-color)),
+    color var(--checkbox-speed-color, var(--speed-color));
 
   &:disabled {
     opacity: var(--checkbox-disabled-opacity, 0.6);
