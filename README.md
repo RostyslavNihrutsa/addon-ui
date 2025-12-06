@@ -54,6 +54,7 @@ yarn add addon-ui
 
 This library now ships with dedicated documentation files for each component in the docs/ directory. Start here:
 
+- [Accordion](docs/Accordion.md)
 - [Avatar](docs/Avatar.md)
 - [Button](docs/Button.md)
 - [Checkbox](docs/Checkbox.md)
@@ -70,10 +71,14 @@ This library now ships with dedicated documentation files for each component in 
 - [ScrollArea](docs/ScrollArea.md)
 - [SvgSprite](docs/SvgSprite.md)
 - [Switch](docs/Switch.md)
+- [Tabs](docs/Tabs.md) (includes Tabs, TabsList, TabsTrigger, TabsContent)
 - [Tag](docs/Tag.md)
 - [TextArea](docs/TextArea.md)
 - [TextField](docs/TextField.md)
 - [Toast](docs/Toast.md)
+- [Tooltip](docs/Tooltip.md)
+- [Truncate](docs/Truncate.md)
+- [TruncateList](docs/TruncateList.md)
 - [View](docs/View.md)
 - [ViewDrawer](docs/ViewDrawer.md)
 - [ViewModal](docs/ViewModal.md)

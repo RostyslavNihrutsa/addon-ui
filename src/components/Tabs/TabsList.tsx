@@ -64,7 +64,9 @@ const TabsList: ForwardRefRenderFunction<HTMLDivElement, TabsListProps> = (props
         });
     }, []);
 
-    const updateIndicator = useCallback(_debounce(updateIndicatorImmediate, 50), [updateIndicatorImmediate]);
+    const updateIndicator = useCallback(() => {
+        return _debounce(updateIndicatorImmediate, 50);
+    }, [updateIndicatorImmediate]);
 
     useLayoutEffect(() => {
         updateIndicatorImmediate();
@@ -91,8 +93,8 @@ const TabsList: ForwardRefRenderFunction<HTMLDivElement, TabsListProps> = (props
             window.removeEventListener("resize", updateIndicator);
             resizeObserver.disconnect();
             mutationObserver.disconnect();
-            updateIndicator.cancel();
         };
+        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, []);
 
     return (

@@ -1,8 +1,8 @@
 .icon {
   color: var(--icon-color);
   transition:
-    transform var(--transition-speed-sm),
-    color var(--transition-speed-sm);
+    transform var(--icon-speed-transform, var(--speed-sm)),
+    color var(--icon-speed-color, var(--speed-color));
 
   &:hover {
     color: var(--icon-color-hover);

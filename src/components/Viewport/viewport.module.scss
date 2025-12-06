@@ -9,12 +9,12 @@
 
   &--transition {
     transition:
-      height var(--transition-viewport, var(--transition-speed-md)) ease-in-out,
-      width var(--transition-viewport, var(--transition-speed-md)) ease-in-out,
-      min-height var(--transition-viewport, var(--transition-speed-md)) ease-in-out,
-      min-width var(--transition-viewport, var(--transition-speed-md)) ease-in-out,
-      max-height var(--transition-viewport, var(--transition-speed-md)) ease-in-out,
-      max-width var(--transition-viewport, var(--transition-speed-md)) ease-in-out;
+      height var(--viewport-speed-height, var(--speed-md)) ease-in-out,
+      width var(--viewport-speed-width, var(--speed-md)) ease-in-out,
+      min-height var(--viewport-speed-min-height, var(--speed-md)) ease-in-out,
+      min-width var(--viewport-speed-min-width, var(--speed-md)) ease-in-out,
+      max-height var(--viewport-speed-max-height, var(--speed-md)) ease-in-out,
+      max-width var(--viewport-speed-max-width, var(--speed-md)) ease-in-out;
   }
 
   &--expanded {

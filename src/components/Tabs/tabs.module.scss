@@ -19,7 +19,7 @@ $border-width: 1px;
     position: relative;
     display: flex;
     justify-content: space-between;
-    transition: border-bottom-color var(--transition-speed-sm);
+    transition: border-bottom-color var(--tabs-speed-border-color, var(--speed-color));
 
     @include theme.rtl() {
       & {
@@ -55,8 +55,8 @@ $border-width: 1px;
     font-weight: var(--tabs-trigger-font-weight, 400);
     color: var(--tabs-trigger-color, var(--text-primary-color));
     transition:
-      color var(--transition-speed-sm) ease,
-      font-weight var(--transition-speed-sm) ease;
+      color var(--tabs-speed-color, var(--speed-color)) ease,
+      font-weight var(--tabs-speed-font-weight, var(--speed-sm)) ease;
 
     &[data-state="active"] {
       font-weight: var(--tabs-trigger-font-weight-active, 600);
@@ -80,8 +80,8 @@ $border-width: 1px;
       color: var(--tabs-trigger-badge-color, var(--text-secondary-color));
       background-color: var(--tabs-trigger-badge-bg-color, var(--bg-secondary-color));
       transition:
-        background-color var(--transition-speed-sm) ease,
-        color var(--transition-speed-sm) ease;
+        background-color var(--tabs-speed-bg, var(--speed-color)) ease,
+        color var(--tabs-speed-color, var(--speed-color)) ease;
 
       .#{$root}__trigger[data-state="active"] & {
         color: var(--tabs-trigger-badge-active-color, white);
@@ -107,9 +107,10 @@ $border-width: 1px;
     border-radius: #{$radius} #{$radius} 0 0;
     will-change: opacity, left, width;
     transition:
-      opacity var(--transition-speed-sm) ease,
-      left var(--transition-speed-sm) ease,
-      width var(--transition-speed-sm) ease;
+      opacity var(--tabs-speed-opacity, var(--speed-sm)) ease,
+      left var(--tabs-speed-left, var(--speed-sm)) ease,
+      width var(--tabs-speed-width, var(--speed-sm)) ease,
+      background-color var(--tabs-speed-bg, var(--speed-color)) ease;
 
     .#{$root}--reverse & {
       bottom: auto;
