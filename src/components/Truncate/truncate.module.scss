@@ -6,6 +6,7 @@
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  transition: color var(--truncate-speed-color, var(--speed-color));
 
   &--middle {
     text-overflow: clip;
