@@ -1,5 +1,21 @@
 # Changelog
 
+## 🚀 Release `addon-ui` v0.7.1 (2025-12-08)
+
+
+### 🐛 Bug Fixed
+
+* **TabsList:** fix debounce invocation in TabsList ([7ea2b68](https://github.com/addon-stack/addon-ui/commit/7ea2b6816dc2aea6b20a787cd217baae281e466c))
+
+
+
+
+
+### 🙌 Contributors
+
+- [Addon Stack](https://github.com/addon-stack) (@addon-stack) — commits: 2
+- [Rostyslav Nihrutsa](https://github.com/RostyslavNihrutsa) (@RostyslavNihrutsa) — commits: 2
+
 ## 🚀 Release `addon-ui` v0.7.0 (2025-12-06)
 
 
