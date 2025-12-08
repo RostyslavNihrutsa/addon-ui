@@ -54,6 +54,7 @@ yarn add addon-ui
 
 This library now ships with dedicated documentation files for each component in the docs/ directory. Start here:
 
+- [Accordion](docs/Accordion.md)
 - [Avatar](docs/Avatar.md)
 - [Button](docs/Button.md)
 - [Checkbox](docs/Checkbox.md)
