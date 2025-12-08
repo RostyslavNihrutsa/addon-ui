@@ -65,7 +65,7 @@ const TabsList: ForwardRefRenderFunction<HTMLDivElement, TabsListProps> = (props
     }, []);
 
     const updateIndicator = useCallback(() => {
-        return _debounce(updateIndicatorImmediate, 50);
+        return _debounce(updateIndicatorImmediate, 50)();
     }, [updateIndicatorImmediate]);
 
     useLayoutEffect(() => {
