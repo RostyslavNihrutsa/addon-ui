@@ -5,6 +5,7 @@ import React, {
     memo,
     useImperativeHandle,
     useLayoutEffect,
+    useMemo,
     useRef,
     useState,
 } from "react";
@@ -12,12 +13,15 @@ import classnames from "classnames";
 
 import {useComponentProps} from "../../providers";
 
+import {Highlight, HighlightProps} from "../Highlight";
+
 import styles from "./truncate.module.scss";
 
 export interface TruncateProps extends ComponentProps<"span"> {
     text?: string;
     middle?: boolean;
     separator?: string;
+    highlight?: Omit<HighlightProps, 'textToHighlight'>;
 }
 
 const trimMiddle = (el: HTMLElement, text: string, separator: string) => {
@@ -50,10 +54,21 @@ const trimMiddle = (el: HTMLElement, text: string, separator: string) => {
 };
 
 const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (props, ref) => {
-    const {text = "", middle, separator = "...", className, ...other} = {...useComponentProps("truncate"), ...props};
+    const {
+        text = "",
+        middle,
+        separator = "...",
+        className,
+        highlight,
+        ...other
+    } = {...useComponentProps("truncate"), ...props};
 
     const innerRef = useRef<HTMLSpanElement | null>(null);
     const [displayedText, setDisplayedText] = useState(text);
+
+    const finalText = useMemo(() => {
+        return middle ? displayedText : text;
+    }, [displayedText, text, middle]);
 
     useImperativeHandle(ref, () => innerRef.current!, []);
 
@@ -95,7 +110,6 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
 
     return (
         <span
-            ref={innerRef}
             className={classnames(
                 styles["truncate"],
                 {
@@ -105,7 +119,13 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
             )}
             {...other}
         >
-            {middle ? displayedText : text}
+            <span ref={innerRef} className={styles["truncate__hidden"]}/>
+
+            {
+                highlight
+                    ? <Highlight {...highlight} textToHighlight={finalText}/>
+                    : finalText
+            }
         </span>
     );
 };
