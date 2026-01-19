@@ -9,6 +9,7 @@ import React, {
     useRef,
     useState,
 } from "react";
+import debounce from "debounce";
 import classnames from "classnames";
 
 import {useComponentProps} from "../../providers";
@@ -76,36 +77,22 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
         const el = innerRef.current;
         if (!el || !middle) return;
 
-        let animationFrameId: number;
         let observer: ResizeObserver | null = null;
 
-        const measureAndTrim = () => {
-            animationFrameId = requestAnimationFrame(() => {
-                const newText = trimMiddle(el, text, separator);
-                if (newText !== displayedText) {
-                    setDisplayedText(newText);
-                }
-            });
-        };
+        const measureAndTrim = debounce(() => {
+            setDisplayedText(trimMiddle(el, text, separator));
+        }, 150);
 
         measureAndTrim();
 
-        if ("ResizeObserver" in window) {
-            observer = new ResizeObserver(() => {
-                cancelAnimationFrame(animationFrameId);
-                measureAndTrim();
-            });
-            observer.observe(el);
-        }
+        observer = new ResizeObserver(() => measureAndTrim());
 
-        window.addEventListener("resize", measureAndTrim);
+        observer.observe(el);
 
         return () => {
-            window.removeEventListener("resize", measureAndTrim);
+            measureAndTrim.clear();
             observer?.disconnect();
-            cancelAnimationFrame(animationFrameId);
         };
-        // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [text, separator, middle]);
 
     return (
