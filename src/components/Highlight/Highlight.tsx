@@ -14,7 +14,7 @@ export interface HighlightProps extends Omit<HighlighterProps, "searchWords"> {
 }
 
 const Highlight: FC<HighlightProps> = props => {
-    const {color, activeClassName, highlightClassName, searchWords, textToHighlight, ...other} = {
+    const {color, className, activeClassName, highlightClassName, searchWords, textToHighlight, ...other} = {
         ...useComponentProps("highlight"),
         ...props,
     };
@@ -33,16 +33,17 @@ const Highlight: FC<HighlightProps> = props => {
 
     return (
         <Highlighter
-            highlightClassName={classnames(
+            className={classnames(
                 styles["highlight"],
                 {
                     [styles[`highlight--${color}-color`]]: color,
                 },
-                highlightClassName
+                className
             )}
+            highlightClassName={classnames(styles["highlight-mark"], highlightClassName)}
+            activeClassName={classnames(styles["highlight-mark--active"], activeClassName)}
             searchWords={search}
             textToHighlight={textToHighlight}
-            activeClassName={classnames(styles["highlight--active"], activeClassName)}
             {...other}
         />
     );
