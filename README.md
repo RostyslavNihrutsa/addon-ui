@@ -69,6 +69,7 @@ This library now ships with dedicated documentation files for each component in 
 - [Modal](docs/Modal.md)
 - [Odometer](docs/Odometer.md) (component + useOdometer hook)
 - [ScrollArea](docs/ScrollArea.md)
+- [Select](docs/Select.md)
 - [SvgSprite](docs/SvgSprite.md)
 - [Switch](docs/Switch.md)
 - [Tabs](docs/Tabs.md) (includes Tabs, TabsList, TabsTrigger, TabsContent)
