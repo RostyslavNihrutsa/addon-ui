@@ -1,5 +1,21 @@
 # Changelog
 
+## 🚀 Release `addon-ui` v0.9.2 (2026-01-26)
+
+
+### 🤖 CI
+
+* **release:** update npm configuration and workflow for version consistency ([b5ad1af](https://github.com/addon-stack/addon-ui/commit/b5ad1af20fab953881efb66fe6944748411815bf))
+
+
+
+
+
+### 🙌 Contributors
+
+- [Addon Stack](https://github.com/addon-stack) (@addon-stack) — commits: 1
+- [Anjey Tsibylskij](https://github.com/atldays) (@atldays) — commits: 1
+
 ## 🚀 Release `addon-ui` v0.9.1 (2026-01-26)
 
 
