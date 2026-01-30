@@ -75,31 +75,35 @@ export const Inline: StoryObj<TruncateProps> = {
 
     render: props => (
         <div style={{display: "flex", flexDirection: "column", gap: "20px"}}>
-            <Header title="Inline Truncate with Button (flex-start)"/>
-            <div style={{
-                display: "flex",
-                alignItems: "center",
-                border: "1px solid #ccc",
-                padding: "10px",
-                width: "300px",
-                resize: "horizontal",
-                overflow: "auto"
-            }}>
-                <TruncateComponent {...props} style={{flexShrink: 1}}/>
+            <Header title="Inline Truncate with Button (flex-start)" />
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
+                    padding: "10px",
+                    width: "300px",
+                    resize: "horizontal",
+                    overflow: "auto",
+                }}
+            >
+                <TruncateComponent {...props} style={{flexShrink: 1}} />
                 <button style={{flexShrink: 0, marginLeft: "10px"}}>Button</button>
             </div>
 
-            <Header title="Inline Truncate with Button (always follows)"/>
-            <div style={{
-                display: "flex",
-                alignItems: "center",
-                border: "1px solid #ccc",
-                padding: "10px",
-                width: "400px",
-                resize: "horizontal",
-                overflow: "auto"
-            }}>
-                <TruncateComponent {...props} style={{flexShrink: 1}}/>
+            <Header title="Inline Truncate with Button (always follows)" />
+            <div
+                style={{
+                    display: "flex",
+                    alignItems: "center",
+                    border: "1px solid #ccc",
+                    padding: "10px",
+                    width: "400px",
+                    resize: "horizontal",
+                    overflow: "auto",
+                }}
+            >
+                <TruncateComponent {...props} style={{flexShrink: 1}} />
                 <button style={{flexShrink: 0, marginLeft: "10px"}}>Action</button>
             </div>
         </div>
@@ -141,10 +145,10 @@ const TruncateStoryRender = (props: TruncateProps) => {
                     resize: "horizontal",
                 }}
             >
-                <Header title="Truncate with highlight" style={{paddingBottom: "10px"}}/>
+                <Header title="Truncate with highlight" style={{paddingBottom: "10px"}} />
 
                 <div style={{margin: "0 20px 10px"}}>
-                    <TextField value={searchWords} onChange={e => setSearchWords(e.target.value)}/>
+                    <TextField value={searchWords} onChange={e => setSearchWords(e.target.value)} />
                 </div>
 
                 <ScrollArea style={{borderTop: "1px solid #ccc"}}>
@@ -152,18 +156,17 @@ const TruncateStoryRender = (props: TruncateProps) => {
                         <div key={url} style={{borderBottom: "1px solid #ccc", padding: "10px"}}>
                             <TruncateComponent
                                 text={title}
-                                render={(text) => <Highlight textToHighlight={text} searchWords={[searchWords]}/>}
+                                render={text => <Highlight textToHighlight={text} searchWords={[searchWords]} />}
                             />
                             <div style={{display: "flex", alignItems: "center", minWidth: 0}}>
                                 <TruncateComponent
                                     text={url}
-                                    render={(text) => <Highlight textToHighlight={text} searchWords={[searchWords]}/>}
+                                    render={text => <Highlight textToHighlight={text} searchWords={[searchWords]} />}
                                     middle
                                     style={{flexShrink: 1}}
                                 />
                                 <button style={{flexShrink: 0, marginLeft: "8px"}}>Button</button>
                             </div>
-
                         </div>
                     ))}
                 </ScrollArea>

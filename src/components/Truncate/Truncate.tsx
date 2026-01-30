@@ -36,7 +36,13 @@ const addToCache = (key: string, value: string) => {
     cache.set(key, value);
 };
 
-const calculateMiddleTruncate = (text: string, maxWidth: number, font: string, letterSpacing: string, separator: string) => {
+const calculateMiddleTruncate = (
+    text: string,
+    maxWidth: number,
+    font: string,
+    letterSpacing: string,
+    separator: string
+) => {
     const cacheKey = `${text}-${maxWidth}-${font}-${letterSpacing}-${separator}`;
     if (cache.has(cacheKey)) return cache.get(cacheKey)!;
 
@@ -103,7 +109,7 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
             return;
         }
 
-        const observer = new ResizeObserver((entries) => {
+        const observer = new ResizeObserver(entries => {
             const entry = entries[0];
             if (!entry) return;
 
@@ -114,7 +120,7 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
 
             const truncated = calculateMiddleTruncate(text, maxWidth, font, letterSpacing, separator);
 
-            setDisplayedText((prev) => (prev !== truncated ? truncated : prev));
+            setDisplayedText(prev => (prev !== truncated ? truncated : prev));
         });
 
         observer.observe(el);
@@ -126,7 +132,8 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
     return (
         <span
             ref={containerRef}
-            className={classnames(styles["truncate"],
+            className={classnames(
+                styles["truncate"],
                 {
                     [styles["truncate--middle"]]: middle,
                 },
@@ -140,11 +147,11 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
                     <span className={styles["truncate__hidden"]} aria-hidden="true">
                         {text}
                     </span>
-                    <span className={classnames(styles["truncate__content"], contentClassname)}>
-                        {content}
-                    </span>
+                    <span className={classnames(styles["truncate__content"], contentClassname)}>{content}</span>
                 </>
-            ) : content}
+            ) : (
+                content
+            )}
         </span>
     );
 };
