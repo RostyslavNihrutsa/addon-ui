@@ -166,7 +166,7 @@ export default definePlugin((options: PluginOptions = {}) => {
                                             return "ui-highlight";
                                         }
 
-                                        if (resource.includes("react-responsive-overflow-list")){
+                                        if (resource.includes("react-responsive-overflow-list")) {
                                             return "ui-truncatelist";
                                         }
                                     }
