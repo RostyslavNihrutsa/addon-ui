@@ -14,8 +14,8 @@ import type {BuilderContract} from "./types";
 
 export interface PluginOptions {
     themeDir?: string;
-    configFileName?: string;
-    styleFileName?: string;
+    configName?: string;
+    styleName?: string;
     mergeConfig?: boolean;
     mergeStyles?: boolean;
 }
@@ -23,8 +23,8 @@ export interface PluginOptions {
 export default definePlugin((options: PluginOptions = {}) => {
     const {
         themeDir = ".",
-        configFileName = "ui.config",
-        styleFileName = "ui.style",
+        configName = "config.ui",
+        styleName = "style.ui",
         mergeConfig = true,
         mergeStyles = true,
     } = options;
@@ -47,8 +47,8 @@ export default definePlugin((options: PluginOptions = {}) => {
                 path.join(srcDir, sharedDir, ...normalizeThemeDir),
             ];
 
-            configFinder = new ConfigFinder(configFileName, config).setCanMerge(mergeConfig).setSearchDirs(searchDirs);
-            styleFinder = new StyleFinder(styleFileName, config).setCanMerge(mergeStyles).setSearchDirs(searchDirs);
+            configFinder = new ConfigFinder(configName, config).setCanMerge(mergeConfig).setSearchDirs(searchDirs);
+            styleFinder = new StyleFinder(styleName, config).setCanMerge(mergeStyles).setSearchDirs(searchDirs);
 
             configBuilder = new ConfigBuilder(configFinder);
             styleBuilder = new StyleBuilder(styleFinder);
@@ -64,6 +64,134 @@ export default definePlugin((options: PluginOptions = {}) => {
                         "addon-ui-virtual"
                     ),
                 ],
+                optimization: {
+                    splitChunks: {
+                        cacheGroups: {
+                            addonUI: {
+                                test: (module: any) => {
+                                    const resource =
+                                        module.resource ||
+                                        (typeof module.nameForCondition === "function"
+                                            ? module.nameForCondition()
+                                            : "");
+
+                                    if (!resource) {
+                                        return false;
+                                    }
+
+                                    const isComponent = /src[\\/]components[\\/]/.test(resource);
+
+                                    if (isComponent) {
+                                        if (resource.includes("node_modules")) {
+                                            return resource.includes("addon-ui");
+                                        }
+
+                                        return true;
+                                    }
+
+                                    return /node_modules[\\/](@radix-ui|radix-ui|autosize|odometer|react-highlight-words|react-responsive-overflow-list)/.test(
+                                        resource
+                                    );
+                                },
+                                name(module: any) {
+                                    const resource =
+                                        module.resource ||
+                                        (typeof module.nameForCondition === "function"
+                                            ? module.nameForCondition()
+                                            : "");
+
+                                    const extractName = (res: string) => {
+                                        if (!res) return null;
+
+                                        const match = res.match(/src[\\/]components[\\/]([^\\/]+)/);
+
+                                        if (match && match[1] && !match[1].includes(".") && match[1] !== "index") {
+                                            const name = match[1].toLowerCase();
+
+                                            if (["button", "basebutton", "iconbutton"].includes(name)) {
+                                                return "button";
+                                            }
+
+                                            return name;
+                                        }
+
+                                        return null;
+                                    };
+
+                                    const directName = extractName(resource);
+
+                                    if (directName) {
+                                        return `ui-${directName}`;
+                                    }
+
+                                    if (resource.includes("node_modules")) {
+                                        if (resource.includes("radix-ui")) {
+                                            const match = resource.match(/@radix-ui[\\/]react-([^\\/]+)/);
+
+                                            if (match) {
+                                                const radixName = match[1];
+
+                                                const mainRadixComponents = [
+                                                    "accordion",
+                                                    "avatar",
+                                                    "checkbox",
+                                                    "dialog",
+                                                    "dropdown-menu",
+                                                    "popover",
+                                                    "scroll-area",
+                                                    "select",
+                                                    "switch",
+                                                    "tabs",
+                                                    "toast",
+                                                    "tooltip",
+                                                ];
+
+                                                if (mainRadixComponents.includes(radixName)) {
+                                                    return `ui-${radixName.replace(/-/g, "")}`;
+                                                }
+                                            }
+
+                                            return "ui-common";
+                                        }
+
+                                        if (resource.includes("odometer")) {
+                                            return "ui-odometer";
+                                        }
+
+                                        if (resource.includes("autosize")) {
+                                            return "ui-textarea";
+                                        }
+
+                                        if (resource.includes("react-highlight-words")) {
+                                            return "ui-highlight";
+                                        }
+
+                                        if (resource.includes("react-responsive-overflow-list")){
+                                            return "ui-truncatelist";
+                                        }
+                                    }
+
+                                    let issuer = module.issuer;
+
+                                    while (issuer) {
+                                        const nameFromIssuer = extractName(issuer.resource || "");
+
+                                        if (nameFromIssuer) {
+                                            return `ui-${nameFromIssuer}`;
+                                        }
+
+                                        issuer = issuer.issuer;
+                                    }
+
+                                    return "ui-common";
+                                },
+                                chunks: "all",
+                                enforce: true,
+                                priority: 30,
+                            },
+                        },
+                    },
+                },
             } satisfies Rspack;
         },
         manifest: ({manifest}) => {
