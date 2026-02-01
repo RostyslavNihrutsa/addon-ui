@@ -1,35 +1,48 @@
+@mixin _attribute-context($attr, $value) {
+  @if & {
+    [#{$attr}="#{$value}"] &,
+    &[#{$attr}="#{$value}"] {
+      @content;
+    }
+  } @else {
+    [#{$attr}="#{$value}"] {
+      @content;
+    }
+  }
+}
+
 @mixin light {
-  :root {
+  @include _attribute-context("theme", "light") {
     @content;
   }
 }
 
 @mixin dark {
-  html[theme="dark"] {
+  @include _attribute-context("theme", "dark") {
     @content;
   }
 }
 
 @mixin ltr {
-  html[dir="ltr"] & {
+  @include _attribute-context("dir", "ltr") {
     @content;
   }
 }
 
 @mixin rtl {
-  html[dir="rtl"] & {
+  @include _attribute-context("dir", "rtl") {
     @content;
   }
 }
 
 @mixin view($view) {
-  html[view="#{$view}"] & {
+  @include _attribute-context("view", $view) {
     @content;
   }
 }
 
 @mixin browser($browser) {
-  html[browser="#{$browser}"] & {
+  @include _attribute-context("browser", $browser) {
     @content;
   }
 }

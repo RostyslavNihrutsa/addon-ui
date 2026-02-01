@@ -1,6 +1,6 @@
 @use "../../../styles/mixins" as theme;
 
-@include theme.light {
+:root {
   --viewport-height: var(--viewport-min-height);
   --viewport-width: var(--viewport-min-width);
 

@@ -15,7 +15,7 @@ import "addon-ui-style.scss";
 
 import config from "addon-ui-config";
 
-export interface UIProviderProps extends Partial<Config>, Pick<ThemeProviderProps, "storage"> {
+export interface UIProviderProps extends Partial<Config>, Pick<ThemeProviderProps, "storage" | "container"> {
     /**
      * A custom view identifier that allows developers to specify a unique name for styling customization.
      * This value is set as a "view" attribute on the container element and can be targeted through SCSS mixins
@@ -38,52 +38,6 @@ export interface UIProviderProps extends Partial<Config>, Pick<ThemeProviderProp
      * ```
      */
     view?: string;
-
-    /**
-     * The DOM element where the provider will set attributes like "view" and "browser".
-     *
-     * @remarks
-     * - When a string is provided, it's used as a CSS selector to find the element via `document.querySelector`.
-     * - When an Element is provided, attributes are set directly on that element.
-     * - When `false`, no element attributes are set.
-     *
-     * Attributes are automatically cleaned up when the component unmounts.
-     *
-     * @default "html"
-     *
-     * @example
-     * ```tsx
-     * // Use default html element
-     * <UIProvider>
-     *   <App />
-     * </UIProvider>
-     * ```
-     *
-     * @example
-     * ```tsx
-     * // Use custom selector
-     * <UIProvider container="#app-root">
-     *   <App />
-     * </UIProvider>
-     * ```
-     *
-     * @example
-     * ```tsx
-     * // Use direct element reference
-     * <UIProvider container={document.body}>
-     *   <App />
-     * </UIProvider>
-     * ```
-     *
-     * @example
-     * ```tsx
-     * // Disable container attributes
-     * <UIProvider container={false}>
-     *   <App />
-     * </UIProvider>
-     * ```
-     */
-    container?: string | Element | false;
 }
 
 const UIProvider: FC<PropsWithChildren<UIProviderProps>> = props => {
@@ -117,7 +71,7 @@ const UIProvider: FC<PropsWithChildren<UIProviderProps>> = props => {
     }, [view, container]);
 
     return (
-        <ThemeProvider components={componentsProps} storage={storage}>
+        <ThemeProvider components={componentsProps} storage={storage} container={container}>
             <ExtraProvider extra={extraProps}>
                 <IconsProvider icons={svgIcons}>{children}</IconsProvider>
             </ExtraProvider>
