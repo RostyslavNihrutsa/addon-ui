@@ -5,16 +5,14 @@ import React, {
     memo,
     useImperativeHandle,
     useLayoutEffect,
-    useMemo,
     useRef,
     useState,
 } from "react";
-import debounce from "debounce";
 import classnames from "classnames";
 
 import {useComponentProps} from "../../providers";
 
-import {Highlight, HighlightProps} from "../Highlight";
+import {calculateMiddleTruncate} from "./utils";
 
 import styles from "./truncate.module.scss";
 
@@ -22,37 +20,9 @@ export interface TruncateProps extends ComponentProps<"span"> {
     text?: string;
     middle?: boolean;
     separator?: string;
-    highlight?: Omit<HighlightProps, "textToHighlight">;
+    contentClassname?: string;
+    render?: (text: string) => React.ReactNode;
 }
-
-const trimMiddle = (el: HTMLElement, text: string, separator: string) => {
-    const measure = (txt: string) => {
-        el.textContent = txt;
-        return el.scrollWidth <= el.clientWidth;
-    };
-
-    if (measure(text)) return text;
-
-    let low = 0;
-    let high = text.length - 2;
-    let result = "";
-
-    while (low <= high) {
-        const size = Math.floor((low + high) / 2);
-        const left = text.slice(0, Math.ceil(size / 2));
-        const right = text.slice(text.length - Math.floor(size / 2));
-        const trimmed = left + separator + right;
-
-        if (measure(trimmed)) {
-            result = trimmed;
-            low = size + 1;
-        } else {
-            high = size - 1;
-        }
-    }
-
-    return result || text.charAt(0) + separator + text.charAt(text.length - 1);
-};
 
 const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (props, ref) => {
     const {
@@ -60,43 +30,47 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
         middle,
         separator = "...",
         className,
-        highlight,
+        contentClassname,
+        render,
         ...other
     } = {...useComponentProps("truncate"), ...props};
 
-    const innerRef = useRef<HTMLSpanElement | null>(null);
+    const containerRef = useRef<HTMLSpanElement>(null);
     const [displayedText, setDisplayedText] = useState(text);
 
-    const finalText = useMemo(() => {
-        return middle ? displayedText : text;
-    }, [displayedText, text, middle]);
-
-    useImperativeHandle(ref, () => innerRef.current!, []);
+    useImperativeHandle(ref, () => containerRef.current!, []);
 
     useLayoutEffect(() => {
-        const el = innerRef.current;
-        if (!el || !middle) return;
+        const el = containerRef.current;
 
-        let observer: ResizeObserver | null = null;
+        if (!middle || !el) {
+            setDisplayedText(text);
+            return;
+        }
 
-        const measureAndTrim = debounce(() => {
-            setDisplayedText(trimMiddle(el, text, separator));
-        }, 150);
+        const observer = new ResizeObserver(entries => {
+            const entry = entries[0];
+            if (!entry) return;
 
-        measureAndTrim();
+            const maxWidth = entry.contentRect.width;
+            const {fontWeight, fontSize, fontFamily, letterSpacing} = window.getComputedStyle(el);
 
-        observer = new ResizeObserver(() => measureAndTrim());
+            const font = [fontWeight, fontSize, fontFamily].join(" ");
+
+            const truncated = calculateMiddleTruncate(text, maxWidth, font, letterSpacing, separator);
+
+            setDisplayedText(prev => (prev !== truncated ? truncated : prev));
+        });
 
         observer.observe(el);
+        return () => observer.disconnect();
+    }, [text, middle, separator]);
 
-        return () => {
-            measureAndTrim.clear();
-            observer?.disconnect();
-        };
-    }, [text, separator, middle]);
+    const content = render ? render(displayedText) : displayedText;
 
     return (
         <span
+            ref={containerRef}
             className={classnames(
                 styles["truncate"],
                 {
@@ -104,11 +78,19 @@ const Truncate: ForwardRefRenderFunction<HTMLSpanElement, TruncateProps> = (prop
                 },
                 className
             )}
+            title={text}
             {...other}
         >
-            <span ref={innerRef} className={styles["truncate__hidden"]} />
-
-            {highlight ? <Highlight {...highlight} textToHighlight={finalText} /> : finalText}
+            {middle ? (
+                <>
+                    <span className={styles["truncate__hidden"]} aria-hidden="true">
+                        {text}
+                    </span>
+                    <span className={classnames(styles["truncate__content"], contentClassname)}>{content}</span>
+                </>
+            ) : (
+                content
+            )}
         </span>
     );
 };

@@ -15,18 +15,34 @@ import "addon-ui-style.scss";
 
 import config from "addon-ui-config";
 
-export interface UIProviderProps extends Partial<Config>, Pick<ThemeProviderProps, "storage"> {
+export interface UIProviderProps extends Partial<Config>, Pick<ThemeProviderProps, "storage" | "container"> {
+    /**
+     * A custom view identifier that allows developers to specify a unique name for styling customization.
+     * This value is set as a "view" attribute on the container element and can be targeted through SCSS mixins
+     * to apply view-specific styles and behavior.
+     *
+     * @example
+     * ```tsx
+     * <UIProvider view="dashboard">
+     *   <App />
+     * </UIProvider>
+     * ```
+     *
+     * @example
+     * ```scss
+     * @include view("dashboard") {
+     *   .some-class {
+     *     // Custom styles for dashboard view
+     *   }
+     * }
+     * ```
+     */
     view?: string;
 }
 
-const UIProvider: FC<PropsWithChildren<UIProviderProps>> = ({
-    children,
-    components = {},
-    extra = {},
-    icons = {},
-    storage,
-    view,
-}) => {
+const UIProvider: FC<PropsWithChildren<UIProviderProps>> = props => {
+    const {children, components = {}, extra = {}, icons = {}, storage, view, container = "html"} = props;
+
     const componentsProps = useMemo<ComponentsProps>(() => merge(config.components || {}, components), [components]);
 
     const extraProps = useMemo<ExtraProps>(() => merge(config.extra || {}, extra), [extra]);
@@ -34,17 +50,28 @@ const UIProvider: FC<PropsWithChildren<UIProviderProps>> = ({
     const svgIcons = useMemo<Icons>(() => merge(config.icons || {}, icons), [icons]);
 
     useEffect(() => {
-        const html = document.querySelector("html");
-        if (html) {
-            if (view) {
-                html.setAttribute("view", view);
-            }
-            html.setAttribute("browser", getBrowser());
+        if (container === false) {
+            return;
         }
-    }, [view]);
+
+        const element = typeof container === "string" ? document.querySelector(container) : container;
+
+        if (element) {
+            if (view) {
+                element.setAttribute("view", view);
+            }
+
+            element.setAttribute("browser", getBrowser());
+
+            return () => {
+                element.removeAttribute("browser");
+                element.removeAttribute("view");
+            };
+        }
+    }, [view, container]);
 
     return (
-        <ThemeProvider components={componentsProps} storage={storage}>
+        <ThemeProvider components={componentsProps} storage={storage} container={container}>
             <ExtraProvider extra={extraProps}>
                 <IconsProvider icons={svgIcons}>{children}</IconsProvider>
             </ExtraProvider>
