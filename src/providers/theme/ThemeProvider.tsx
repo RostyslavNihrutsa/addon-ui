@@ -122,16 +122,16 @@ const ThemeProvider: FC<PropsWithChildren<ThemeProviderProps>> = props => {
         return storage;
     }, [storage]);
 
-    const changeTheme = useCallback(
-        (theme: Theme) => {
-            if (currentStorage) {
-                currentStorage.change(theme).catch(e => console.error("ThemeProvider: set theme to storage error", e));
-            } else {
-                setTheme(theme);
-            }
-        },
-        [currentStorage]
-    );
+    // prettier-ignore
+    const changeTheme = useCallback((theme: Theme) => {
+        setTheme(theme);
+
+        if (currentStorage) {
+            currentStorage
+                .change(theme)
+                .catch(e => console.error("ThemeProvider: set theme to storage error", e));
+        }
+    }, [currentStorage]);
 
     const toggleTheme = useCallback(() => {
         changeTheme(theme === Theme.Dark ? Theme.Light : Theme.Dark);

@@ -55,8 +55,8 @@ export interface PluginOptions {
 export default definePlugin((options: PluginOptions = {}) => {
     const {
         themeDir = ".",
-        configName = "config.ui",
-        styleName = "style.ui",
+        configName = "ui.config",
+        styleName = "ui.style",
         mergeConfig = true,
         mergeStyles = true,
         splitChunks = false,
