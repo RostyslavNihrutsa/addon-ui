@@ -25,6 +25,7 @@ export * from "./Tag";
 export * from "./TextArea";
 export * from "./TextField";
 export * from "./Toast";
+export * from "./ToggleGroup";
 export * from "./Tooltip";
 export * from "./Truncate";
 export * from "./TruncateList";

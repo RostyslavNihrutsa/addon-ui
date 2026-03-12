@@ -34,6 +34,8 @@ import type {
     TextAreaProps,
     TextFieldProps,
     ToastProps,
+    ToggleGroupItemProps,
+    ToggleGroupProps,
     TooltipProps,
     TruncateListProps,
     TruncateProps,
@@ -90,6 +92,8 @@ export interface ComponentsProps {
         | "radius"
         | "color"
     >;
+    toggleGroup: Omit<ToggleGroupProps, "type" | "value" | "defaultValue" | "onValueChange">;
+    toggleGroupItem: Omit<ToggleGroupItemProps, "value">;
     tooltip?: Omit<TooltipProps, "content">;
     truncate?: TruncateProps;
     truncateList?: TruncateListProps;
