@@ -17,6 +17,7 @@ export * from "./Odometer";
 export * from "./Popover";
 export * from "./ScrollArea";
 export * from "./Select";
+export * from "./Shift";
 export * from "./SvgSprite";
 export * from "./Switch";
 export * from "./Tabs";
