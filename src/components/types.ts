@@ -13,6 +13,11 @@ import type {
     ListProps,
     ModalProps,
     OdometerProps,
+    PopoverAnchorProps,
+    PopoverCloseProps,
+    PopoverContentProps,
+    PopoverProps,
+    PopoverTriggerProps,
     ScrollAreaProps,
     SelectContentProps,
     SelectIconProps,
@@ -52,6 +57,11 @@ export interface ComponentsProps {
     listItem?: ListItemProps;
     modal?: ModalProps;
     odometer?: Pick<OdometerProps, "auto" | "format" | "duration">;
+    popover: PopoverProps;
+    popoverClose: PopoverCloseProps;
+    popoverAnchor: PopoverAnchorProps;
+    popoverTrigger: PopoverTriggerProps;
+    popoverContent: PopoverContentProps;
     scrollArea?: ScrollAreaProps;
     select?: SelectProps;
     selectItem?: SelectItemProps;

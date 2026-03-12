@@ -14,6 +14,7 @@ export * from "./List";
 export * from "./ListItem";
 export * from "./Modal";
 export * from "./Odometer";
+export * from "./Popover";
 export * from "./ScrollArea";
 export * from "./Select";
 export * from "./SvgSprite";
