@@ -59,12 +59,12 @@ const Shift: ForwardRefRenderFunction<HTMLDivElement, ShiftProps> = (props, ref)
             style.transform = "translate3d(0, 0, 0)";
         }
 
-        if (!isValidElement<Record<string, any>>(child)) {
+        if (!isValidElement<React.HTMLAttributes<HTMLElement>>(child)) {
             return createElement("span", {className, style}, child);
         }
 
         return cloneElement(child, {
-            style: {...child.props.style, ...style},
+            style: {...(child.props?.style ?? {}), ...style},
             className: classnames(className, child.props.className),
         });
     });
@@ -74,7 +74,9 @@ const Shift: ForwardRefRenderFunction<HTMLDivElement, ShiftProps> = (props, ref)
     useLayoutEffect(() => {
         const el = containerRef.current?.children[active - 1] as HTMLElement;
 
-        el && setCurrentHeight(el.offsetHeight);
+        if (el) {
+            setCurrentHeight(el.offsetHeight);
+        }
     }, [active]);
 
     return (
